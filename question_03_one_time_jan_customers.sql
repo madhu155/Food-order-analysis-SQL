@@ -4,10 +4,13 @@
 select Customer_code, count(Customer_code) as no_orders
 from orders
 where datepart(month, Placed_at) = 1 and datepart(year, Placed_at) = 2025
-and Customer_code not in ( select Customer_code
+and Customer_code not in 
+(
+ select Customer_code
 from orders
 where not ( datepart(month, Placed_at) = 1 and datepart(year, Placed_at) = 2025)
-group by Customer_code)
+group by Customer_code
+)
 group by Customer_code
 having count(Customer_code) = 1;
 
